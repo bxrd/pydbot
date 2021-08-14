@@ -6,9 +6,9 @@ import os
 from dhooks import Webhook, Embed
 from datetime import datetime
 
-token = "ODcyODQxNzQ5Njg3NTk5MTM0.YQvvOQ.fnskNO7RqgGYHigP0NEv5JwDvPg"
+token = ""
 client = discord.Client()
-hook = Webhook("https://discord.com/api/webhooks/875488882068684810/LqRi04y6z6i_KwuB9jMXBCmTUZhKS7wBdqVa6kU-r86DNHj_-K53RQxhoCrlV5cvBR7R")
+hook = Webhook("")
 time = datetime.now().strftime("%H:%M %p")
 ip = requests.get("https://api.ipify.org/").text
 r = requests.get(f"http://extreme-ip-lookup.com/json/{ip}")
